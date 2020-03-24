@@ -1,11 +1,11 @@
 /* jshint esversion: 6 */
-const timeFontSize = 6;
+const timeFontSize = 4;
 const dateFontSize = 3;
 const gmtFontSize = 2;
 const font = "6x8";
 
 const xyCenter = g.getWidth() / 2;
-const yposTime = 75;
+const yposTime = 65;
 const yposDate = 130;
 const yposYear = 175;
 const yposGMT = 220;
@@ -23,9 +23,11 @@ function drawSimpleClock() {
   g.setFontAlign(0, 0);
 
   // draw time
-  var time = da[4].substr(0, 5).split(":");
+  var time = da[4].split(":");
   var hours = time[0],
-    minutes = time[1];
+    minutes = time[1],
+    seconds = time[2];
+
   var meridian = "";
   if (is12Hour) {
     hours = parseInt(hours,10);
@@ -41,7 +43,7 @@ function drawSimpleClock() {
   }
 
   g.setFont(font, timeFontSize);
-  g.drawString(`${hours}:${minutes}`, xyCenter, yposTime, true);
+  g.drawString(`${hours}:${minutes}:${seconds}`, xyCenter, yposTime, true);
   g.setFont(font, gmtFontSize);
   g.drawString(meridian, xyCenter + 102, yposTime + 10, true);
 
@@ -71,8 +73,8 @@ g.clear();
 Bangle.loadWidgets();
 Bangle.drawWidgets();
 
-// refesh every 15 sec
-setInterval(drawSimpleClock, 15E3);
+// refesh every 500 milliseconds
+setInterval(drawSimpleClock, 500);
 
 // draw now
 drawSimpleClock();
