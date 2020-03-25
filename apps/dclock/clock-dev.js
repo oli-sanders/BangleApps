@@ -1,11 +1,13 @@
 /* jshint esversion: 6 */
 const timeFontSize = 4;
+const tstFontSize = 2;
 const dateFontSize = 3;
 const gmtFontSize = 2;
 const font = "6x8";
 
 const xyCenter = g.getWidth() / 2;
 const yposTime = 65;
+const yposTst = 100;
 const yposDate = 130;
 const yposYear = 175;
 const yposGMT = 220;
@@ -47,6 +49,9 @@ function drawSimpleClock() {
   g.setFont(font, gmtFontSize);
   g.drawString(meridian, xyCenter + 102, yposTime + 10, true);
 
+  g.setFont(font, tstFontSize);
+  g.drawString(`tst:${d.getTime()}`, xyCenter, yposTst, true);
+
   // draw Day, name of month, Date
   var date = [da[0], da[1], da[2]].join(" ");
   g.setFont(font, dateFontSize);
@@ -74,7 +79,7 @@ Bangle.loadWidgets();
 Bangle.drawWidgets();
 
 // refesh every 500 milliseconds
-setInterval(drawSimpleClock, 500);
+setInterval(drawSimpleClock, 100);
 
 // draw now
 drawSimpleClock();
