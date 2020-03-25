@@ -1,2 +1,3 @@
 0.01: branched from simple clock and added seconds
 0.02: add timestamp
+0.03: fix timestamp round to whole number
