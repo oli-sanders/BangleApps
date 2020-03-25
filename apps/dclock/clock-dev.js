@@ -1,7 +1,8 @@
 /* jshint esversion: 6 */
 const timeFontSize = 4;
 const tstFontSize = 2;
-const dateFontSize = 3;
+const isoFontSize = 1;
+const dmFontSize = 2;
 const gmtFontSize = 2;
 const font = "6x8";
 
@@ -9,7 +10,7 @@ const xyCenter = g.getWidth() / 2;
 const yposTime = 65;
 const yposTst = 100;
 const yposDate = 130;
-const yposYear = 175;
+const yposDayMonth = 175;
 const yposGMT = 220;
 
 // Check settings for what type our clock should be
@@ -49,19 +50,20 @@ function drawSimpleClock() {
   g.setFont(font, gmtFontSize);
   g.drawString(meridian, xyCenter + 102, yposTime + 10, true);
 
+  // Timestamp
   var tst = Math.round(d.getTime());
   g.setFont(font, tstFontSize);
   g.drawString(`tst:${tst}`, xyCenter, yposTst, true);
 
-  // draw Day, name of month, Date
-  var date = [da[0], da[1], da[2]].join(" ");
-  g.setFont(font, dateFontSize);
+  // ISO String
+  g.setFont(font, isoFontSize);
+  g.drawString(`iso:${d.toISOString()}`, xyCenter, yposDate, true);
 
-  g.drawString(date, xyCenter, yposDate, true);
-
-  // draw year
-  g.setFont(font, dateFontSize);
-  g.drawString(d.getFullYear(), xyCenter, yposYear, true);
+  // draw Month name and Day of the week
+  // draw Day, name of month
+  //      da[0], da[1]
+  g.setFont(font, dmFontSize);
+  g.drawString(`m:${da[1]} d:${da[0]}`, xyCenter, yposDayMonth, true);
 
   // draw gmt
   var gmt = da[5];
