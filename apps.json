@@ -511,7 +511,7 @@
   { "id": "dclock",
     "name": "Dev Clock",
     "icon": "clock-dev.png",
-    "version":"0.02",
+    "version":"0.03",
     "description": "A Simple Digital Clock",
     "tags": "clock",
     "type":"clock",

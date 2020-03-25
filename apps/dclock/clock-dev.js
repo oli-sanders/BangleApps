@@ -49,8 +49,9 @@ function drawSimpleClock() {
   g.setFont(font, gmtFontSize);
   g.drawString(meridian, xyCenter + 102, yposTime + 10, true);
 
+  var tst = Math.round(d.getTime());
   g.setFont(font, tstFontSize);
-  g.drawString(`tst:${d.getTime()}`, xyCenter, yposTst, true);
+  g.drawString(`tst:${tst}`, xyCenter, yposTst, true);
 
   // draw Day, name of month, Date
   var date = [da[0], da[1], da[2]].join(" ");
