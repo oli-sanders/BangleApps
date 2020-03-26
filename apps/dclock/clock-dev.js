@@ -16,10 +16,15 @@ const yposGMT = 220;
 // Check settings for what type our clock should be
 var is12Hour = (require("Storage").readJSON("setting.json",1)||{})["12hour"];
 
+function getUTCTime(d) {
+  return d.toUTCString().split(' ')[4].split(':').map(function(d){return Number(d)});
+}
+
 function drawSimpleClock() {
   // get date
   var d = new Date();
   var da = d.toString().split(" ");
+  var dutc = getUTCTime(d);
 
   g.reset(); // default draw styles
   // drawSting centered
@@ -45,6 +50,7 @@ function drawSimpleClock() {
     hours = (" "+hours).substr(-2);
   }
 
+  // Time
   g.setFont(font, timeFontSize);
   g.drawString(`${hours}:${minutes}:${seconds}`, xyCenter, yposTime, true);
   g.setFont(font, gmtFontSize);
@@ -59,12 +65,11 @@ function drawSimpleClock() {
   g.setFont(font, isoFontSize);
   g.drawString(`iso:${d.toISOString()}`, xyCenter, yposDate, true);
 
-  // draw Month name and Day of the week
-  // draw Day, name of month
-  //      da[0], da[1]
+  // draw Month name, Day of the week and beats
+  var beats = Math.floor((((dutc[0] + 1) % 24) + dutc[1] / 60 + dutc[2] / 3600) * 1000 / 24);
   g.setFont(font, dmFontSize);
-  g.drawString(`m:${da[1]} d:${da[0]}`, xyCenter, yposDayMonth, true);
-
+  g.drawString(`m:${da[1]} d:${da[0]} b:@${beats}`, xyCenter, yposDayMonth, true);
+  
   // draw gmt
   var gmt = da[5];
   g.setFont(font, gmtFontSize);
