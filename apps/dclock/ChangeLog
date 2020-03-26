@@ -3,3 +3,4 @@
 0.03: fix timestamp round to whole number
 0.04: add iso datetime and move day / month names
 0.05: add beats
+0.06: tidy up
