@@ -1,15 +1,14 @@
 /* jshint esversion: 6 */
 const timeFontSize = 4;
-const tstFontSize = 2;
 const dateFontSize = 3;
-const dmFontSize = 2;
-const gmtFontSize = 2;
+const smallFontSize = 2;
 const font = "6x8";
 
 const xyCenter = g.getWidth() / 2;
 const yposTime = 50;
 const yposDate = 85;
 const yposTst = 115;
+const yposDml = 170;
 const yposDayMonth = 195;
 const yposGMT = 220;
 
@@ -53,26 +52,42 @@ function drawSimpleClock() {
   // Time
   g.setFont(font, timeFontSize);
   g.drawString(`${hours}:${minutes}:${seconds}`, xyCenter, yposTime, true);
-  g.setFont(font, gmtFontSize);
+  g.setFont(font, smallFontSize);
   g.drawString(meridian, xyCenter + 102, yposTime + 10, true);
 
   // Date String
   g.setFont(font, dateFontSize);
-  g.drawString(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`, xyCenter, yposDate, true);
+  g.drawString(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`, xyCenter, yposDate, true);
 
   // Timestamp
   var tst = Math.round(d.getTime());
-  g.setFont(font, tstFontSize);
+  g.setFont(font, smallFontSize);
   g.drawString(`tst:${tst}`, xyCenter, yposTst, true);
+
+  //Days in month
+  var dom = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+
+  //Days since full moon
+  var knownnew = new Date(2020,02,24,09,28,0);
+
+  // Get millisecond difference and divide down to cycles
+  var cycles = (d.getTime()-knownnew.getTime())/1000/60/60/24/29.53;
+
+  // Multiply decimal component back into days since new moon
+  var sincenew = (cycles % 1)*29.53;
+
+  // Draw days in month and sime since new moon
+  g.setFont(font, smallFontSize);
+  g.drawString(`md:${dom} l:${sincenew.toFixed(2)}`, xyCenter, yposDml, true);
 
   // draw Month name, Day of the week and beats
   var beats = Math.floor((((dutc[0] + 1) % 24) + dutc[1] / 60 + dutc[2] / 3600) * 1000 / 24);
-  g.setFont(font, dmFontSize);
+  g.setFont(font, smallFontSize);
   g.drawString(`m:${da[1]} d:${da[0]} @${beats}`, xyCenter, yposDayMonth, true);
-  
+
   // draw gmt
   var gmt = da[5];
-  g.setFont(font, gmtFontSize);
+  g.setFont(font, smallFontSize);
   g.drawString(gmt, xyCenter, yposGMT, true);
 }
 
